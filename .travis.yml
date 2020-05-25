@@ -1,0 +1,24 @@
+language: rust
+rust:
+  - stable
+
+before_script:
+  - sudo apt-get update
+  - sudo apt-get -y install -qq gcc-arm-linux-gnueabihf wget crossbuild-essential-armhf
+  - rustup component add rustfmt
+  - cargo install cargo-deb
+  - rustup target add armv7-unknown-linux-gnueabihf
+  - echo "[target.armv7-unknown-linux-gnueabihf]" >> ~/.cargo/config
+  - echo 'linker = "arm-linux-gnueabihf-gcc"' >> ~/.cargo/config
+
+env:
+  - OPENSSL_STATIC=1 OPENSSL_LIB_DIR=$TRAVIS_BUILD_DIR/openssl-1.0.1t OPENSSL_INCLUDE_DIR=$TRAVIS_BUILD_DIR/openssl-1.0.1t/include
+
+script:
+  - wget https://www.openssl.org/source/openssl-1.0.1t.tar.gz
+  - tar xzf openssl-1.0.1t.tar.gz
+  - MACHINE=armv7 ARCH=arm CC=arm-linux-gnueabihf-gcc
+  - cd openssl-1.0.1t && ./config shared && make && cd -
+  - cargo-deb --target=armv7-unknown-linux-gnueabihf
+  - ls -ltr target/armv7-unknown-linux-gnueabihf/debian
+  - ls -ltr target/armv7-unknown-linux-gnueabihf/release
