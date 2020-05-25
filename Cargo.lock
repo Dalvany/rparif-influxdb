@@ -738,6 +738,7 @@ dependencies = [
  "chrono",
  "getopts",
  "json",
+ "openssl",
  "reqwest",
  "rparif",
  "titlecase",
