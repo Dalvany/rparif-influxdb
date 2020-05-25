@@ -66,6 +66,15 @@
 //! pollution,insee=94028,city="Creteil",day="current",pollutant="o3" index=35 1590271200000000000
 //! pollution,insee=94028,city="Creteil",day="next",pollutant="o3" index=45 1590357600000000000
 //! ```
+//!
+//! # Cross-compiling for raspberry pi
+//! Install locally openssl (see https://stackoverflow.com/a/37378989)  
+//! Install and setup toolchain & co : https://medium.com/@wizofe/cross-compiling-rust-for-arm-e-g-raspberry-pi-using-any-os-11711ebfc52b
+//!  
+//! When build, add environment variable OPENSSL_STATIC=1
+//! ```.env
+//! OPENSSL_STATIC=1 cargo build --target=armv7-unknown-linux-gnueabihf
+//! ```
 #![cfg_attr(test, deny(warnings))]
 #![warn(
     missing_copy_implementations,
