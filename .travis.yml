@@ -1,24 +1,14 @@
+dist: trusty
 language: rust
-rust:
-  - stable
+cache: cargo
 
-before_script:
-  - sudo apt-get update
-  - sudo apt-get -y install -qq gcc-arm-linux-gnueabihf wget crossbuild-essential-armhf
-  - rustup component add rustfmt
-  - cargo install cargo-deb
-  - rustup target add armv7-unknown-linux-gnueabihf
-  - echo "[target.armv7-unknown-linux-gnueabihf]" >> ~/.cargo/config
-  - echo 'linker = "arm-linux-gnueabihf-gcc"' >> ~/.cargo/config
-
-env:
-  - OPENSSL_STATIC=1 OPENSSL_LIB_DIR=$TRAVIS_BUILD_DIR/openssl-1.0.1t OPENSSL_INCLUDE_DIR=$TRAVIS_BUILD_DIR/openssl-1.0.1t/include
-
-script:
-  - wget https://www.openssl.org/source/openssl-1.0.1t.tar.gz
-  - tar xzf openssl-1.0.1t.tar.gz
-  - MACHINE=armv7 ARCH=arm CC=arm-linux-gnueabihf-gcc
-  - cd openssl-1.0.1t && ./config shared && make && cd -
-  - cargo-deb --target=armv7-unknown-linux-gnueabihf
-  - ls -ltr target/armv7-unknown-linux-gnueabihf/debian
-  - ls -ltr target/armv7-unknown-linux-gnueabihf/release
+env: TARGET=arm-unknown-linux-gnueabihf CARGO_TARGET_ARM_UNKNOWN_LINUX_GNUEABIHF_LINKER=arm-linux-gnueabihf-gcc
+before_deploy: ci/before_deploy.sh
+deploy:
+  provider: releases
+  api_key:
+    secure: VtnOvK+iuq9e7a8ZrUtS/8jlMJJt/O+mzMRinZZpCGyfvdpu6K59tI8+NWP9IPZgV8KhAZ3QFRVZy78JqvZMExzhSF+LVg3tHsBuTX83l4NlyxJX9X7bOBwCo3ZZd2aXxWJfrwcAa6zaC6EExWPPMtHMCXueEDwYxbEz4Ofk7y7TzVYmeXM+34fbYQdK20PBtMOb6oAkthU39v3IG1IbimFyFAYSUWd9ce67gPK5kQ0iNCCST8QW/VVCBi55MkO4mcyRBsTFblirFrUklA8hTf5nb9QN5zcHemtDJyAGZ7S5+KrAjS7IkYbo9fh0T3N2vIG836lwBLZVSOpEi81W2wkIzNd8lFDW///2LRH/wtrkoXIjdn1oMA4NDq4WW/7XO//9JEWNYhd7Y20YdTv3w62rkbHu+otXcq1nYaQWpkwKMkOeOK8YYnAi45r0MuJbyEZBxaNX8X1nSdaOPeo3+z7lagZ4K3qjkAwFwhgrEPCtZAWjW3a1bf1KI2iHMB4XtKMVgY94/MJJSHLrTL20yhEv7InIf8tlWb1RT4sDu7RumFf+Gx1XmxfKYoeXerKRQ/UAWC4mnzeeU+wfo6O8aSw2Z+5MDlpx0dCPgtNIEDQOIRtoDPu59lbmSEUTO+3X88GqzHssPFeF4ZKRWQOAE9N7mDPODQ+N+sy8oq14K9Q=
+  file: target/**/*_armhf.deb
+  on:
+    tags: true
+  skip_cleanup: true
