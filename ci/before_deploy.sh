@@ -13,4 +13,4 @@ if [ "$TARGET" = "arm-unknown-linux-gnueabihf" ]; then
 fi
 
 # Compile the binary and make a debian package
-cargo-deb --target=$TARGET
+cargo-deb --target=$TARGET --no-strip
