@@ -77,20 +77,20 @@
 //! ```
 #![cfg_attr(test, deny(warnings))]
 #![warn(
-    missing_copy_implementations,
-    missing_debug_implementations,
-    missing_docs,
-    trivial_numeric_casts,
-    unsafe_code,
-    unused_extern_crates,
-    unused_import_braces,
-    unused_qualifications
+missing_copy_implementations,
+missing_debug_implementations,
+missing_docs,
+trivial_numeric_casts,
+unsafe_code,
+unused_extern_crates,
+unused_import_braces,
+unused_qualifications
 )]
 
+use std::{env, fmt};
 use std::collections::BTreeMap;
 use std::error::Error;
 use std::fmt::Formatter;
-use std::{env, fmt};
 
 use args::Args;
 use chrono::{Local, NaiveDateTime, NaiveTime, TimeZone};
@@ -118,28 +118,28 @@ impl InfluxLineProtocol for Index {
             if !names.is_empty() {
                 let name = names.get(self.insee().unwrap().as_str());
                 match name {
-                    None => result.push_str(r#",city="none""#),
-                    Some(v) => result.push_str(format!(r#",city="{}""#, v).as_str()),
+                    None => result.push_str(",city=none"),
+                    Some(v) => result.push_str(format!(",city={}", v.replace(" ", "\\ ")).as_str()),
                 }
             }
         } else {
-            result.push_str(r#",insee=0"#);
+            result.push_str(",insee=0");
         }
 
         let current = Local::today().naive_utc();
         if current > self.date() {
-            result.push_str(r#",day="previous""#);
+            result.push_str(",day=previous");
         } else if current == self.date() {
-            result.push_str(r#",day="current""#);
+            result.push_str(",day=current");
         } else {
-            result.push_str(r#",day="next""#);
+            result.push_str(",day=next");
         }
 
         if !self.pollutants().is_empty() {
             // Sort to have a deterministic order for tag value
             self.pollutants().sort();
-            let pol = self.pollutants().join(" ");
-            result.push_str(format!(r#",pollutant="{}""#, pol).as_str());
+            let pol = self.pollutants().join("\\ ");
+            result.push_str(format!(",pollutant={}", pol).as_str());
         }
 
         result.push_str(format!(" index={}", self.index()).as_str());
@@ -157,7 +157,7 @@ impl InfluxLineProtocol for Index {
                     .unwrap()
                     .timestamp_nanos()
             )
-            .as_str(),
+                .as_str(),
         );
 
         result
