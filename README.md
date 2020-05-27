@@ -26,18 +26,18 @@ The tag day show is an 'offset' from when the measure was made and the timestamp
 ```
 rparif-influxdb --api-key my-api-key
 
-pollution,insee=0,day="previous",pollutant="global" index=35 1590184800000000000
-pollution,insee=0,day="previous",pollutant="no2" index=17 1590184800000000000
-pollution,insee=0,day="previous",pollutant="o3" index=35 1590184800000000000
-pollution,insee=0,day="previous",pollutant="pm10" index=31 1590184800000000000
-pollution,insee=0,day="current",pollutant="global" index=34 1590271200000000000
-pollution,insee=0,day="current",pollutant="no2" index=17 1590271200000000000
-pollution,insee=0,day="current",pollutant="o3" index=34 1590271200000000000
-pollution,insee=0,day="current",pollutant="pm10" index=23 1590271200000000000
-pollution,insee=0,day="next",pollutant="global" index=45 1590357600000000000
-pollution,insee=0,day="next",pollutant="no2" index=28 1590357600000000000
-pollution,insee=0,day="next",pollutant="o3" index=45 1590357600000000000
-pollution,insee=0,day="next",pollutant="pm10" index=25 1590357600000000000
+pollution,insee=0,day=previous,pollutant=global index=35 1590184800000000000
+pollution,insee=0,day=previous,pollutant=no2 index=17 1590184800000000000
+pollution,insee=0,day=previous,pollutant=o3 index=35 1590184800000000000
+pollution,insee=0,day=previous,pollutant=pm10 index=31 1590184800000000000
+pollution,insee=0,day=current,pollutant=global index=34 1590271200000000000
+pollution,insee=0,day=current,pollutant=no2 index=17 1590271200000000000
+pollution,insee=0,day=current,pollutant=o3 index=34 1590271200000000000
+pollution,insee=0,day=current,pollutant=pm10 index=23 1590271200000000000
+pollution,insee=0,day=next,pollutant=global index=45 1590357600000000000
+pollution,insee=0,day=next,pollutant=no2 index=28 1590357600000000000
+pollution,insee=0,day=next,pollutant=o3 index=45 1590357600000000000
+pollution,insee=0,day=next,pollutant=pm10 index=25 1590357600000000000
 ```
 
 * Fetch indices for INSEE 75101 (Paris 1er arr.) and 94028 (Créteil) without fetching city name (note that the index is
@@ -45,12 +45,12 @@ computed from all pollutants listed in `pollutant` tag) :
 ```
 rparif-influxdb --api-key my-api-key --city 75101 --city 94028
 
-pollution,insee=75101,day="previous",pollutant="o3 pm10" index=32 1590184800000000000
-pollution,insee=75101,day="current",pollutant="o3" index=35 1590271200000000000
-pollution,insee=75101,day="next",pollutant="o3" index=40 1590357600000000000
-pollution,insee=94028,day="previous",pollutant="o3" index=33 1590184800000000000
-pollution,insee=94028,day="current",pollutant="o3" index=35 1590271200000000000
-pollution,insee=94028,day="next",pollutant="o3" index=45 1590357600000000000
+pollution,insee=75101,day=previous,pollutant=o3\ pm10 index=32 1590184800000000000
+pollution,insee=75101,day=current,pollutant=o3 index=35 1590271200000000000
+pollution,insee=75101,day=next,pollutant=o3 index=40 1590357600000000000
+pollution,insee=94028,day=previous,pollutant=o3 index=33 1590184800000000000
+pollution,insee=94028,day=current,pollutant=o3 index=35 1590271200000000000
+pollution,insee=94028,day=next,pollutant=o3 index=45 1590357600000000000
 ```
 
 * Fetch indices for INSEE 75101 (Paris 1er arr.) and 94028 (Créteil) and fetch city name (note that the index is
@@ -58,12 +58,12 @@ computed from all pollutants listed in `pollutant` tag) :
 ```
 rparif-influxdb --api-key my-api-key --city 75101 --city 94028 --name
 
-pollution,insee=75101,city="Paris 1er Arrondissement",day="previous",pollutant="o3 pm10" index=32 1590184800000000000
-pollution,insee=75101,city="Paris 1er Arrondissement",day="current",pollutant="o3" index=35 1590271200000000000
-pollution,insee=75101,city="Paris 1er Arrondissement",day="next",pollutant="o3" index=40 1590357600000000000
-pollution,insee=94028,city="Creteil",day="previous",pollutant="o3" index=33 1590184800000000000
-pollution,insee=94028,city="Creteil",day="current",pollutant="o3" index=35 1590271200000000000
-pollution,insee=94028,city="Creteil",day="next",pollutant="o3" index=45 1590357600000000000
+pollution,insee=75101,city=Paris\ 1er\ Arrondissement,day=previous,pollutant=o3\ pm10 index=32 1590184800000000000
+pollution,insee=75101,city=Paris\ 1er\ Arrondissement,day=current,pollutant=o3 index=35 1590271200000000000
+pollution,insee=75101,city=Paris\ 1er\ Arrondissement,day=next,pollutant=o3 index=40 1590357600000000000
+pollution,insee=94028,city=Creteil,day=previous,pollutant=o3 index=33 1590184800000000000
+pollution,insee=94028,city=Creteil,day=current,pollutant=o3 index=35 1590271200000000000
+pollution,insee=94028,city=Creteil,day=next,pollutant=o3 index=45 1590357600000000000
 ```
 
 # Cross-compiling for raspberry pi
@@ -74,6 +74,8 @@ When build, add environment variable OPENSSL_STATIC=1
 ```.env
 OPENSSL_STATIC=1 cargo build --target=armv7-unknown-linux-gnueabihf
 ```
+
+A build script `cross_build_deb_armhf.sh` is provided. Beware of the `rm -rf`it contains.
 
 # TODO
 * Handle errors : instead of failing, error should be reported as metric
