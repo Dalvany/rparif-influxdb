@@ -20,7 +20,7 @@
 //!
 //! # Tag day
 //!
-//! The tag day show is an 'offset' from when the measure was made and the timestamp is set accordingly (adding or removing a day if day=next or day=previous)
+//! The tag day is an 'offset' from when the measure was made and the timestamp is set accordingly (adding or removing a day if day=next or day=previous)
 //!
 //! # Examples
 //! * Fetch global and per pollutant indices for yesterday, today and tomorrow :
@@ -39,25 +39,6 @@
 //! pollution,insee=0,day=next,pollutant=no2 index=28 1590357600000000000
 //! pollution,insee=0,day=next,pollutant=o3 index=45 1590357600000000000
 //! pollution,insee=0,day=next,pollutant=pm10 index=25 1590357600000000000
-//! ```
-//!
-//! * Fetch global and per pollutant indices for yesterday, today and tomorrow
-//! and use pollutant name as field key :
-//! ```
-//! rparif-influxdb --api-key my-api-key
-//!
-//! pollution,insee=0,day=previous global=35 1590184800000000000
-//! pollution,insee=0,day=previous no2=17 1590184800000000000
-//! pollution,insee=0,day=previous o3=35 1590184800000000000
-//! pollution,insee=0,day=previous pm10=31 1590184800000000000
-//! pollution,insee=0,day=current global=34 1590271200000000000
-//! pollution,insee=0,day=current no2=17 1590271200000000000
-//! pollution,insee=0,day=current o3=34 1590271200000000000
-//! pollution,insee=0,day=current pm10=23 1590271200000000000
-//! pollution,insee=0,day=next global=45 1590357600000000000
-//! pollution,insee=0,day=next no2=28 1590357600000000000
-//! pollution,insee=0,day=next o3=45 1590357600000000000
-//! pollution,insee=0,day=next pm10=25 1590357600000000000
 //! ```
 //!
 //! * Fetch global and per pollutant indices for yesterday, today and tomorrow with
