@@ -742,7 +742,7 @@ dependencies = [
 
 [[package]]
 name = "rparif-influxdb"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "args",
  "chrono",

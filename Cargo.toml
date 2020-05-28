@@ -1,6 +1,6 @@
 [package]
 name = "rparif-influxdb"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Dalvany <Dalvany@users.noreply.github.com>"]
 edition = "2018"
 
@@ -14,4 +14,6 @@ chrono = "0.4"
 reqwest = { version = "0.10", features = ["blocking"] }
 json = "0.12"
 titlecase = "1.0"
+
+[target.arm-unknown-linux-gnueabihf.dependencies]
 openssl = { version = "0.10", features = ["vendored"] }

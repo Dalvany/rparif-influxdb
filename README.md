@@ -6,11 +6,12 @@ from [Airparif](https://www.airparif.asso.fr/) (pollution index for Ile-de-Franc
 
 # Arguments
 
-* `-h, --help` : display help
 * `-a, --api-key` : AirParif [API key](https://www.airparif.asso.fr/rss/api)
 * `-n, --name` : flag that allow converting [INSEE](https://www.data.gouv.fr/en/datasets/correspondance-entre-les-codes-postaux-et-codes-insee-des-communes-francaises/) code into city name.
 It has no effect if no INSEE code are given
 * `-c, --city` : city [INSEE](https://www.data.gouv.fr/en/datasets/correspondance-entre-les-codes-postaux-et-codes-insee-des-communes-francaises/) code
+* `-p, --pollutant` : use pollutant name as field name instead of `index` only works if no INSEE code is given as it is
+impossible in case of multiple pollutant to get index for each one
 
 To fetch data for multiple cities, use `-c` or `--city` for each cities, eg:
 ```
@@ -38,6 +39,35 @@ pollution,insee=0,day=next,pollutant=global index=45 1590357600000000000
 pollution,insee=0,day=next,pollutant=no2 index=28 1590357600000000000
 pollution,insee=0,day=next,pollutant=o3 index=45 1590357600000000000
 pollution,insee=0,day=next,pollutant=pm10 index=25 1590357600000000000
+```
+
+* Fetch global and per pollutant indices for yesterday, today and tomorrow 
+ and use pollutant name as field key :
+```
+rparif-influxdb --api-key my-api-key
+
+pollution,insee=0,day=previous global=35 1590184800000000000
+pollution,insee=0,day=previous no2=17 1590184800000000000
+pollution,insee=0,day=previous o3=35 1590184800000000000
+pollution,insee=0,day=previous pm10=31 1590184800000000000
+pollution,insee=0,day=current global=34 1590271200000000000
+pollution,insee=0,day=current no2=17 1590271200000000000
+pollution,insee=0,day=current o3=34 1590271200000000000
+pollution,insee=0,day=current pm10=23 1590271200000000000
+pollution,insee=0,day=next global=45 1590357600000000000
+pollution,insee=0,day=next no2=28 1590357600000000000
+pollution,insee=0,day=next o3=45 1590357600000000000
+pollution,insee=0,day=next pm10=25 1590357600000000000
+```
+
+* Fetch global and per pollutant indices for yesterday, today and tomorrow with
+pollutant name as key field instead of 'index' :
+```
+rparif-influxdb --api-key my-api-key --pollutant
+
+pollution,insee=0,day=previous global=35,no2=17,o3=35,pm10=31 1590184800000000000
+pollution,insee=0,day=current global=34,no2=17,o3=34,pm10=23 1590271200000000000
+pollution,insee=0,day=next global=45,no2=28,o3=45,pm10=25 1590357600000000000
 ```
 
 * Fetch indices for INSEE 75101 (Paris 1er arr.) and 94028 (Créteil) without fetching city name (note that the index is
