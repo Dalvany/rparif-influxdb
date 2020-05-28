@@ -11,7 +11,7 @@ rustup target add $TARGET
 
 # Download the Raspberry Pi cross-compilation toolchain if needed
 if [ -d "/tmp/tools" ]; then
-  rm -R /tmp/tools
+  rm -Rf /tmp/tools
 fi
 if [ "$TARGET" = "arm-unknown-linux-gnueabihf" ]; then
   git clone --depth=1 https://github.com/raspberrypi/tools.git /tmp/tools
