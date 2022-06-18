@@ -8,12 +8,12 @@ edition = "2018"
 
 [dependencies]
 rparif = "0.1"
-args = "2.0"
+args = "2.2"
 getopts = "0.2"
 chrono = "0.4"
-reqwest = { version = "0.10", features = ["blocking"] }
+reqwest = { version = "0.11", features = ["blocking"] }
 json = "0.12"
-titlecase = "1.0"
+titlecase = "2.0"
 
 [target.arm-unknown-linux-gnueabihf.dependencies]
 openssl = { version = "0.10", features = ["vendored"] }
